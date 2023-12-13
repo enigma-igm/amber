@@ -392,7 +392,7 @@ contains
          write(*,*) 'Mass-weighted ionized fraction differs too much from the desired value at the fixed points.'
          write(*,*) 'Desired: ', real((/fixed_points(test_i)/))
          write(*,*) 'Achieved: ', real((/xi(test_i)/))
-         !stop
+         stop
        end if
     enddo
 
