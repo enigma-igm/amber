@@ -40,13 +40,23 @@ program main
 
   ! Timing variables
   integer(4) :: time1,time2
+  character(40), dimension(:), allocatable :: args
   time1 = time()
-
 
   ! Read input params
   ! See input.f90
   call input_read
 
+  allocate(args(3)) ! i don't think allocatable is necessary...
+
+  call get_command_argument(1,args(1))
+  read (args(1),*) input%reion_zmid
+
+  call get_command_argument(2,args(2))
+  read (args(2),*) input%reion_zdel
+
+  call get_command_argument(3,args(3))
+  read (args(3),*) input%reion_zasy
 
   ! Init Openmp
   call OMP_SET_NUM_THREADS(input%sim_Nproc)

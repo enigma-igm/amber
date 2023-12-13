@@ -56,14 +56,19 @@ contains
        call lpt_read
     else
        ! Linear density field
-       call lpt_delta
+       if (lpt%make == 'read_real') then
+          call lpt_delta_read
+          call fft_3d(lpt%delta1,'f')
+       else
+          call lpt_delta
+       endif
 
        ! 1LPT or 2LPT
        call lpt_gradphi1
        if (lpt%order == 2) call lpt_gradphi2
 
        ! IO
-       if (lpt%make == 'write') call lpt_write
+       if (lpt%make == 'write' .or. lpt%make == 'read_real') call lpt_write
     endif
 
     

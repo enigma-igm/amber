@@ -6,7 +6,9 @@ module simulation_module
   ! Modules
   use constant_module
   use sim_module
+  use input_module, only : input
   use timing_module
+  use reion_module, only : reion
   use cosmo_module, only : cosmo
 
 
@@ -69,9 +71,56 @@ contains
     endif
 
 
-    ! File extension
-    sim%fstr = trim(sim%Lstr)//'_'//trim(sim%Nstr)//'_'//trim(sim%zstr)
+    ! Strings for modified output file name
+    ! zmid
+    if (input%reion_zmid < 10) then
+       write(sim%zmidstr,'(f3.1)'),input%reion_zmid
+    else if (input%reion_zmid < 100) then
+       write(sim%zmidstr,'(f4.1)'),input%reion_zmid
+    endif
 
+    ! Deltaz
+    if (input%reion_zdel < 10) then
+       write(sim%Deltazstr,'(f3.1)'),input%reion_zdel
+    else if (input%reion_zdel < 100) then
+       write(sim%Deltazstr,'(f4.1)'),input%reion_zdel
+    endif
+
+    ! Az
+    if (input%reion_zasy < 10) then
+       write(sim%Azstr,'(f3.1)'),input%reion_zasy
+    else if (input%reion_zasy < 100) then
+       write(sim%Azstr,'(f4.1)'),input%reion_zasy
+    endif
+
+    !Ngrid
+    select case (sim%Nm1d)
+    case (1:9)
+       write(sim%Ngrid,'(i1)'),sim%Nm1d
+    case (10:99)
+       write(sim%Ngrid,'(i2)'),sim%Nm1d
+    case (100:999)
+       write(sim%Ngrid,'(i3)'),sim%Nm1d
+    case (1000:9999)
+       write(sim%Ngrid,'(i4)'),sim%Nm1d
+    end select
+
+    !Lboxstr
+    select case (L)
+    case (1:9)
+       write(sim%Lboxstr,'(i1)'),L
+    case (10:99)
+       write(sim%Lboxstr,'(i2)'),L
+    case (100:999)
+       write(sim%Lboxstr,'(i3)'),L
+    case (1000:9999)
+       write(sim%Lboxstr,'(i4)'),L
+    end select
+
+    ! File extension
+    ! sim%fstr = trim(sim%Lstr)//'_'//trim(sim%Nstr)//'_'//trim(sim%zstr)
+    sim%fstr = 'zreion_amber_ICs'//trim(sim%Ngrid)//'_zmid'//trim(sim%zmidstr)//'_Deltaz'// &
+      trim(sim%Deltazstr)//'_Az'//trim(sim%Azstr)//'_hii'//trim(sim%Ngrid)//'_'//trim(sim%Lboxstr)//'Mpc'
 
     ! Unit conversions
     call unit_calc

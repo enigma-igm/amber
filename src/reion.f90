@@ -269,7 +269,7 @@ contains
 
     ! Write zre field
     un = 11
-    fn = trim(reion%dirout)//'zre_'//trim(sim%fstr)//'.dat'
+    fn = trim(reion%dirout)//trim(sim%fstr)
     write(*,*) 'Writing ',trim(fn)
     open(un,file=fn,form='binary')
     write(un) reion%zre

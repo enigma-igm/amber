@@ -25,6 +25,7 @@ module grf_module
      integer(8)    :: Nmesh
      ! Pointers
      real(8), pointer, dimension(:,:,:) :: grf
+     real(8), pointer, dimension(:,:,:) :: grf_real
   end type grf_type
 
 

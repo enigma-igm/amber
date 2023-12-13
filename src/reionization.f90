@@ -351,8 +351,8 @@ contains
 
 
     ! Local variables
-    integer(4) :: iproc
-    real(8), dimension(5) :: xi
+    integer(4) :: iproc, test_i
+    real(8), dimension(5) :: xi, fixed_points
 
 
     ! Timing variables
@@ -385,7 +385,20 @@ contains
     !$omp end parallel do
 
 
-    ! Write to screen
+    ! Check the achieved ionized fractions against the values determined from the Weibull fit.
+    fixed_points = (/reion%xbeg, reion%xear, reion%xmid, reion%xlat, reion%xend /)
+    do test_i=1,5
+       if (abs(fixed_points(test_i)-xi(test_i)) > 0.02) then
+         write(*,*) 'Mass-weighted ionized fraction differs too much from the desired value at the fixed points.'
+         write(*,*) 'Desired: ', real((/fixed_points(test_i)/))
+         write(*,*) 'Achieved: ', real((/xi(test_i)/))
+         !stop
+       end if
+    enddo
+
+    write(*,*) 'Mass-weighted ionized fraction is within 2 percent of the desired value at the fixed points.'
+
+    ! Write to screen or output file
     write(*,*) 'Beginning : ',real((/reion%zbeg,reion%xbeg,xi(1)/))
     write(*,*) 'Early     : ',real((/reion%zear,reion%xear,xi(2)/))
     write(*,*) 'Midpoint  : ',real((/reion%zmid,reion%xmid,xi(3)/))
@@ -571,7 +584,6 @@ contains
     reion%xim = xim/reion%Nmesh
     reion%xiv = xiv/reion%Nmesh
     write(*,*) 'xi : ',real((/reion%xi,reion%xim,reion%xiv/))
-
     
     time2 = time()
     write(*,'(2a)') timing(time1,time2),' : REION ionization fraction'

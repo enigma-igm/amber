@@ -136,6 +136,33 @@ contains
     return
   end subroutine lpt_read
 
+  subroutine lpt_delta_read
+    ! Default
+    implicit none
+
+
+    ! Local variables
+    integer(4)     :: un
+    character(100) :: fn
+    integer(4)        :: k
+
+    ! Timing variables
+    integer(4) :: time1,time2
+    time1 = time()
+
+
+    ! Read padded linear delta field from e.g. initial conditions.
+    un = 11
+    fn = trim(lpt%dirin)//'padded_delta_L='//trim(sim%Lboxstr)//'_N='//trim(sim%Ngrid)//'_z=00.00.dat'
+    write(*,*) 'Reading ',trim(fn)
+    open(un,file=fn,form='binary')
+    read(un) lpt%delta1
+    close(un)
+  
+    time2 = time()
+    write(*,'(2a)') timing(time1,time2),' : reading real delta field for LPT'
+    return
+  end subroutine lpt_delta_read
 
   subroutine lpt_write
     ! Default

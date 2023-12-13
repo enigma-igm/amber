@@ -129,9 +129,12 @@ contains
     read( *,*)
     read( *,*)
     read( *,*) input%reion_make
-    read( *,*) input%reion_zmid
-    read( *,*) input%reion_zdel
-    read( *,*) input%reion_zasy
+    !read( *,*) input%reion_zmid
+    !read( *,*) input%reion_zdel
+    !read( *,*) input%reion_zasy
+    read( *,*)
+    read( *,*)
+    read( *,*)
     read( *,*) input%reion_xear
     read( *,*) input%reion_xmid
     read( *,*) input%reion_xlat

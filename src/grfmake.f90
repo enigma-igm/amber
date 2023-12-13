@@ -39,6 +39,11 @@ contains
     if (grf%make == 'read') then
        ! IO
        call grf_read
+    ! Using a premade linear density field, so skip this step.
+    else if (grf%make == 'skip') then
+       time2 = time()
+       write(*,'(2a)') timing(time1,time2),' : skipping GRF steps'
+       return
     else
        call grf_calc
 
