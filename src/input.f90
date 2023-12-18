@@ -138,8 +138,10 @@ contains
     read( *,*) input%reion_xear
     read( *,*) input%reion_xmid
     read( *,*) input%reion_xlat
-    read( *,*) input%reion_Mmin
-    read( *,*) input%reion_mfp
+    !read( *,*) input%reion_Mmin
+    !read( *,*) input%reion_mfp
+    read( *,*)
+    read( *,*)
     read( *,*) input%reion_dir
     write(*,*) 'REIONIZATION'
     write(*,*) 'Make           = ',trim(input%reion_make)

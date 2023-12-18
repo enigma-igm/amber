@@ -47,7 +47,7 @@ program main
   ! See input.f90
   call input_read
 
-  allocate(args(3)) ! i don't think allocatable is necessary...
+  allocate(args(5))
 
   call get_command_argument(1,args(1))
   read (args(1),*) input%reion_zmid
@@ -57,6 +57,12 @@ program main
 
   call get_command_argument(3,args(3))
   read (args(3),*) input%reion_zasy
+
+  call get_command_argument(4,args(4))
+  read (args(4),*) input%reion_Mmin
+
+  call get_command_argument(5,args(5))
+  read (args(5),*) input%reion_mfp
 
   ! Init Openmp
   call OMP_SET_NUM_THREADS(input%sim_Nproc)

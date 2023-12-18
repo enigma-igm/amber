@@ -22,7 +22,7 @@ module sim_module
      ! Variables
      integer(8)    :: Nmesh
      ! IO
-     character(10) :: Lstr,Nstr,zstr,zmidstr,Deltazstr,Azstr,Ngrid,Lboxstr
+     character(10) :: Lstr,Nstr,zstr,zmidstr,Deltazstr,Azstr,Mminstr,mfpstr,Ngrid,Lboxstr
      character(80) :: fstr
   end type sim_type
 

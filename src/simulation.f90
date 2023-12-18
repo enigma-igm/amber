@@ -120,7 +120,9 @@ contains
     ! File extension
     ! sim%fstr = trim(sim%Lstr)//'_'//trim(sim%Nstr)//'_'//trim(sim%zstr)
     sim%fstr = 'zreion_amber_ICs'//trim(sim%Ngrid)//'_zmid'//trim(sim%zmidstr)//'_Deltaz'// &
-      trim(sim%Deltazstr)//'_Az'//trim(sim%Azstr)//'_hii'//trim(sim%Ngrid)//'_'//trim(sim%Lboxstr)//'Mpc'
+      trim(sim%Deltazstr)//'_Az'//trim(sim%Azstr)// & 
+      '_Mmin'//trim(sim%Mminstr)//'_mfpstr'//trim(sim%mfpstr)// &
+      '_hii'//trim(sim%Ngrid)//'_'//trim(sim%Lboxstr)//'Mpc'
 
     ! Unit conversions
     call unit_calc
