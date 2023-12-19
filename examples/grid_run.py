@@ -2,8 +2,6 @@ import numpy as np
 import os
 import subprocess
 
-# TODO 
-# read in a file with the model parameters and load them into the code
 
 def read_amber_parameters(input_filename):
     """
@@ -23,11 +21,12 @@ def read_amber_parameters(input_filename):
                                    divided by that of the second half (zmid-zlate).
     """
     parameters = np.loadtxt(input_filename)
-    midpoint, duration, asymmetry = np.loadtxt(input_filename, unpack=True)
-    return zip(midpoint, duration, asymmetry)
+    midpoint, duration, asymmetry, minimum_halo_mass, mean_free_path = np.loadtxt(input_filename, unpack=True)
+    return zip(midpoint, duration, asymmetry, minimum_halo_mass, mean_free_path)
 
 
 if __name__ == '__main__':
+    # python grid_run.py --parameter_file input/model_params.txt --input_file_path input/input.txt --output_directory_path output --amber_executeable_path .
     import argparse
     import sys
 
@@ -45,17 +44,17 @@ if __name__ == '__main__':
 
     parameter_zip = read_amber_parameters(input_filename=args.parameter_file)
     for parameters in parameter_zip:
-        #fin = open("/data2/doughty/repos/amber/examples/input/input.txt", "r")
-        #fout = open("output/zmid{:.1f}_Deltaz{:.1f}_Az{:.1f}_log.txt".format(midpoints[zmi], durations[dzi], asymmetries[ai]), "w")
-        #subprocess.call(["/data2/doughty/repos/amber/examples/amber.x", "{:.1f}".format(midpoints[zmi]), "{:.1f}".format(durations[dzi]), \
-        #                "{:.1f}".format(asymmetries[ai])], stdin=fin, stdout=fout)
         midpoint = float(parameters[0])
         duration = float(parameters[1])
         asymmetry = float(parameters[2])
+        Mmin = str(parameters[3])
+        mfp = float(parameters[4])
+        print(midpoint, duration, asymmetry, Mmin, mfp)
         fin = open(args.input_file_path, "r")
-        fout = open("{:s}/zmid{:.1f}_Deltaz{:.1f}_Az{:.1f}_log.txt".format(args.output_directory_path, midpoint, duration, asymmetry), "w")
+        fout = open("{:s}/zmid{:.1f}_Deltaz{:.1f}_Az{:.1f}_Mmin{:s}_mfp{:.1f}_log.txt".format(args.output_directory_path, midpoint, duration, asymmetry, Mmin, mfp), "w")
         subprocess.call(["{:s}/amber.x".format(args.amber_executeable_path), "{:.1f}".format(midpoint), "{:.1f}".format(duration), \
-                         "{:.1f}".format(asymmetry)], stdin=fin, stdout=fout)
+                         "{:.1f}".format(asymmetry), "{:s}".format(Mmin), "{:.1f}".format(mfp)], stdin=fin, stdout=fout)
         fout.close()
         fin.close()
+        sys.exit()
 

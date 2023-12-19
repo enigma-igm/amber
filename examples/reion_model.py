@@ -28,7 +28,7 @@ class ReionModel:
         self._DeltaT = None
 
         # reionization field file name format
-        self.table_name = 'zreion_{:s}_ICs{:d}_zmid{:.1f}_Deltaz{:.1f}_Az{:.1f}_hii{:d}_{:d}Mpc'. \
+        self.table_name = '{:s}_IC{:d}_z{:.1f}_Dz{:.1f}_Az{:.1f}_hii{:d}_{:d}Mpc'. \
             format(self.method, self.ic_dimension, self.zmid, self.Deltaz, self.Az, self.hii_dimension, int(self.Lbox))
         # initialize the reionization field as an ndarray of zeros
         import os

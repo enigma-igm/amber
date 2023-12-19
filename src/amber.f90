@@ -45,8 +45,7 @@ program main
 
   ! Read input params
   ! See input.f90
-  call input_read
-
+  !call input_read
   allocate(args(5))
 
   call get_command_argument(1,args(1))
@@ -63,6 +62,8 @@ program main
 
   call get_command_argument(5,args(5))
   read (args(5),*) input%reion_mfp
+
+  call input_read
 
   ! Init Openmp
   call OMP_SET_NUM_THREADS(input%sim_Nproc)
@@ -97,14 +98,14 @@ program main
   ! See lpt.f90, lptmake.f90
   call lpt_init
   call lpt_make
-
+ 
 
   ! ESF
   ! See esf.f90, esfhalo.f90
   call esf_init
   call esf_make
 
-  
+
   ! Reionization
   ! See reion.f90, reionization.f90
   call reion_init

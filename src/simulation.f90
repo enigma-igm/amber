@@ -93,6 +93,16 @@ contains
        write(sim%Azstr,'(f4.1)'),input%reion_zasy
     endif
 
+    ! Mmin
+    write(sim%Mminstr,'(ES7.1)'),input%reion_Mmin
+
+    ! mfp
+    if (input%reion_mfp < 10) then
+       write(sim%mfpstr,'(f3.1)'),input%reion_mfp
+    else if (input%reion_mfp < 500) then
+       write(sim%mfpstr,'(f4.1)'),input%reion_mfp
+    endif
+
     !Ngrid
     select case (sim%Nm1d)
     case (1:9)
@@ -119,9 +129,9 @@ contains
 
     ! File extension
     ! sim%fstr = trim(sim%Lstr)//'_'//trim(sim%Nstr)//'_'//trim(sim%zstr)
-    sim%fstr = 'zreion_amber_ICs'//trim(sim%Ngrid)//'_zmid'//trim(sim%zmidstr)//'_Deltaz'// &
+    sim%fstr = 'amber_IC'//trim(sim%Ngrid)//'_zm'//trim(sim%zmidstr)//'_Dz'// &
       trim(sim%Deltazstr)//'_Az'//trim(sim%Azstr)// & 
-      '_Mmin'//trim(sim%Mminstr)//'_mfpstr'//trim(sim%mfpstr)// &
+      '_Mmin'//trim(sim%Mminstr)//'_mfp'//trim(sim%mfpstr)// &
       '_hii'//trim(sim%Ngrid)//'_'//trim(sim%Lboxstr)//'Mpc'
 
     ! Unit conversions
