@@ -5,7 +5,7 @@ from scipy.interpolate import interp1d
 
 
 class ReionModel:
-    def __init__(self, method, Lbox, ic_dimension, hii_dimension, zmid, Deltaz, Az, density_file=None):
+    def __init__(self, method, Lbox, ic_dimension, hii_dimension, zmid, Deltaz, Az, Mmin, mfp, density_file=None):
         '''
             Inputs:
                 method (string): Describing method used to generate reionization field (e.g. density, amber, 21cmfast).
@@ -25,11 +25,14 @@ class ReionModel:
         self.zmid = float(zmid)
         self.Deltaz = float(Deltaz)
         self.Az = float(Az)
+        self.Mmin = float(Mmin)
+        self.mfp = float(mfp)
         self._DeltaT = None
 
         # reionization field file name format
-        self.table_name = '{:s}_IC{:d}_z{:.1f}_Dz{:.1f}_Az{:.1f}_hii{:d}_{:d}Mpc'. \
-            format(self.method, self.ic_dimension, self.zmid, self.Deltaz, self.Az, self.hii_dimension, int(self.Lbox))
+        self.table_name = '{:s}_IC{:d}_zm{:.1f}_Dz{:.1f}_Az{:.1f}_Mmin{:.1E}_mfp{:.1f}_hii{:d}_{:d}Mpc'. \
+            format(self.method, self.ic_dimension, self.zmid, self.Deltaz, self.Az, self.Mmin, self.mfp,
+                   self.hii_dimension, int(self.Lbox))
         # initialize the reionization field as an ndarray of zeros
         import os
         try:

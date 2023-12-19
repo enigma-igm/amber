@@ -35,7 +35,8 @@ if __name__ == '__main__':
     for parameters in parameters_zip:
         try:  # see if the zre file exists
             zreion_model = ReionModel(Lbox=20, ic_dimension=128, hii_dimension=128, Az=parameters[2],
-                                      zmid=parameters[0], Deltaz=parameters[1], method='amber')
+                                      zmid=parameters[0], Deltaz=parameters[1], Mmin=parameters[3], mfp=parameters[4],
+                                      method='amber')
             z, xHII1 = zreion_model.retrieve_xHI_redshift(bins=np.linspace(args.lower_z, args.upper_z, 100))
             ax.plot(z[1:], xHII1, color='b', alpha=0.2)
         except:
