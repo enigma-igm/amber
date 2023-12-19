@@ -19,6 +19,11 @@ def read_amber_parameters(input_filename):
                 asymmetry (array): Asymmetries, defined as the redshift difference 
                                    between the first half of the process (zearly-zmid)
                                    divided by that of the second half (zmid-zlate).
+
+		minimum_halp_mass (array): Minimum halo mass permitted to contribute
+					   ionizing photons.
+
+		mean_free_path (array): Mean free path of ionizing photons to use.
     """
     parameters = np.loadtxt(input_filename)
     midpoint, duration, asymmetry, minimum_halo_mass, mean_free_path = np.loadtxt(input_filename, unpack=True)
@@ -56,5 +61,4 @@ if __name__ == '__main__':
                          "{:.1f}".format(asymmetry), "{:s}".format(Mmin), "{:.1f}".format(mfp)], stdin=fin, stdout=fout)
         fout.close()
         fin.close()
-        sys.exit()
 
