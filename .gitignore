@@ -8,3 +8,4 @@ examples/__pycache__/
 examples/input/
 examples/output/
 examples/amber.x
+src/Makefile

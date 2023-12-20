@@ -129,9 +129,9 @@ contains
 
     ! File extension
     ! sim%fstr = trim(sim%Lstr)//'_'//trim(sim%Nstr)//'_'//trim(sim%zstr)
-    sim%fstr = 'amber_IC'//trim(sim%Ngrid)//'_zm'//trim(sim%zmidstr)//'_Dz'// &
+    sim%fstr = 'IC'//trim(sim%Ngrid)//'_zm'//trim(sim%zmidstr)//'_Dz'// &
       trim(sim%Deltazstr)//'_Az'//trim(sim%Azstr)// & 
-      '_Mmin'//trim(sim%Mminstr)//'_mfp'//trim(sim%mfpstr)// &
+      '_Mm'//trim(sim%Mminstr)//'_mfp'//trim(sim%mfpstr)// &
       '_hii'//trim(sim%Ngrid)//'_'//trim(sim%Lboxstr)//'Mpc'
 
     ! Unit conversions
