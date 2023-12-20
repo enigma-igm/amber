@@ -52,13 +52,13 @@ if __name__ == '__main__':
         midpoint = float(parameters[0])
         duration = float(parameters[1])
         asymmetry = float(parameters[2])
-        Mmin = str(parameters[3])
+        Mmin = float(parameters[3])
         mfp = float(parameters[4])
         print(midpoint, duration, asymmetry, Mmin, mfp)
         fin = open(args.input_file_path, "r")
-        fout = open("{:s}/zmid{:.1f}_Deltaz{:.1f}_Az{:.1f}_Mmin{:s}_mfp{:.1f}_log.txt".format(args.output_directory_path, midpoint, duration, asymmetry, Mmin, mfp), "w")
+        fout = open("{:s}/zmid{:.1f}_Deltaz{:.1f}_Az{:.1f}_Mmin{:.1E}_mfp{:.1f}_log.txt".format(args.output_directory_path, midpoint, duration, asymmetry, Mmin, mfp), "w")
         subprocess.call(["{:s}/amber.x".format(args.amber_executeable_path), "{:.1f}".format(midpoint), "{:.1f}".format(duration), \
-                         "{:.1f}".format(asymmetry), "{:s}".format(Mmin), "{:.1f}".format(mfp)], stdin=fin, stdout=fout)
+                         "{:.1f}".format(asymmetry), "{:.1E}".format(Mmin), "{:.1f}".format(mfp)], stdin=fin, stdout=fout)
         fout.close()
         fin.close()
 
