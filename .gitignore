@@ -1,0 +1,10 @@
+examples/input.txt
+examples/input_21cm.txt
+examples/input_cmb.txt
+examples/input_cmbmap.txt
+examples/linpowspec.txt
+examples/.idea/
+examples/__pycache__/
+examples/input/
+examples/output/
+examples/amber.x
