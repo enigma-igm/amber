@@ -7,6 +7,7 @@ import os
 from grid_run import read_amber_parameters
 
 if __name__ == '__main__':
+    # example: python plot_xHI_history.py --parameter_file input/model_params.txt --data_directory /Users/cdoughty/research/processed/data_emulator_setup --figure_directory /Users/cdoughty/research/figures/figures_emulator_setup --upper_z 11.0 --lower_z 5.5 --show_figure
     import argparse
     import sys
 

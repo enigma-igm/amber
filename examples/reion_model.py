@@ -2,7 +2,7 @@ import numpy as np
 from IPython import embed
 import sys
 from scipy.interpolate import interp1d
-
+import os
 
 class ReionModel:
     def __init__(self, method, Lbox, ic_dimension, hii_dimension, zmid, Deltaz, Az, Mmin, mfp, density_file=None):
@@ -18,7 +18,7 @@ class ReionModel:
                 datadir (string): Path to the reionization field data files.
         '''
 
-        self.method = method
+        self.method = 'amber'
         self.Lbox = float(Lbox)
         self.ic_dimension = int(ic_dimension)
         self.hii_dimension = int(hii_dimension)
@@ -30,11 +30,11 @@ class ReionModel:
         self._DeltaT = None
 
         # reionization field file name format
-        self.table_name = '{:s}_IC{:d}_zm{:.1f}_Dz{:.1f}_Az{:.1f}_Mmin{:.1E}_mfp{:.1f}_hii{:d}_{:d}Mpc'. \
-            format(self.method, self.ic_dimension, self.zmid, self.Deltaz, self.Az, self.Mmin, self.mfp,
+        #  removed 'method' property to deal with Fortan filename length limitations
+        self.table_name = 'IC{:d}_zm{:.1f}_Dz{:.1f}_Az{:.1f}_Mm{:.1E}_mfp{:.1f}_hii{:d}_{:d}Mpc'. \
+            format(self.ic_dimension, self.zmid, self.Deltaz, self.Az, self.Mmin, self.mfp,
                    self.hii_dimension, int(self.Lbox))
         # initialize the reionization field as an ndarray of zeros
-        import os
         try:
             data = np.fromfile('{0}/zreion_fields/{1}'.format(os.environ.get("DATADIR"), self.table_name),
                                dtype=np.float32)
@@ -47,6 +47,8 @@ class ReionModel:
                 raise ValueError("When making the reionization field by abundance-matching to a density field, \n"
                                  "you need to provide the filename of the stored density field to use.")
             self.field = self.make_zreion_field_from_density(density_file) # not sure if best way to do this...
+        else:
+            raise ValueError("You didn't define a method for generating the field.")
 
     @property
     def DeltaT(self):
