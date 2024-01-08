@@ -5,7 +5,8 @@ import subprocess
 
 def read_amber_parameters(input_filename):
     """
-        Read a 5 column txt file containing the AMBER model parameters.
+        Read a 6 column txt file containing the AMBER model parameters plus a temperature column at the end.
+        The temperature values are not used in AMBER, but are used later in the grid modeling process.
 
         Inputs:
                 input_filename (str): Name of the txt file containing input parameters.
@@ -25,7 +26,8 @@ def read_amber_parameters(input_filename):
 
                 mean_free_path (array): Mean free path of ionizing photons to use.
     """
-    midpoint, duration, asymmetry, minimum_halo_mass, mean_free_path = np.loadtxt(input_filename, unpack=True)
+    # last column should be temperature, which is not used in AMBER
+    midpoint, duration, asymmetry, minimum_halo_mass, mean_free_path, _ = np.loadtxt(input_filename, unpack=True)
     return zip(midpoint, duration, asymmetry, minimum_halo_mass, mean_free_path)
 
 
