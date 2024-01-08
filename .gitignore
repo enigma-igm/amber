@@ -5,11 +5,14 @@ amber/examples/input_cmbmap.txt
 amber/examples/linpowspec.txt
 amber/examples/.idea/
 amber/examples/__pycache__/
-amber/examples/input/
-amber/examples/output/
+amber/examples/output/cosmo/*
+amber/examples/output/esf/*
+amber/examples/output/grf/*
+amber/examples/output/lpt/*
+amber/examples/output/mesh/*
+amber/examples/output/reion/*
 amber/examples/amber.x
 amber/src/Makefile
-setup.py
 amber.egg-info/
 build/
 dist/
