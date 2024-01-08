@@ -14,6 +14,8 @@ amber/examples/output/reion/*
 amber/examples/output/*_log.txt
 amber/examples/amber.x
 amber/src/Makefile
+src/
+examples/
 amber.egg-info/
 build/
 dist/
