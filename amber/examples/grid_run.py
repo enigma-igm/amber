@@ -5,7 +5,7 @@ import subprocess
 
 def read_amber_parameters(input_filename):
     """
-        Read a 3 column txt file containing the AMBER model parameters.
+        Read a 5 column txt file containing the AMBER model parameters.
 
         Inputs:
                 input_filename (str): Name of the txt file containing input parameters.
@@ -20,12 +20,11 @@ def read_amber_parameters(input_filename):
                                    between the first half of the process (zearly-zmid)
                                    divided by that of the second half (zmid-zlate).
 
-		minimum_halp_mass (array): Minimum halo mass permitted to contribute
-					   ionizing photons.
+                minimum_halp_mass (array): Minimum halo mass permitted to contribute
+                                           ionizing photons.
 
-		mean_free_path (array): Mean free path of ionizing photons to use.
+                mean_free_path (array): Mean free path of ionizing photons to use.
     """
-    parameters = np.loadtxt(input_filename)
     midpoint, duration, asymmetry, minimum_halo_mass, mean_free_path = np.loadtxt(input_filename, unpack=True)
     return zip(midpoint, duration, asymmetry, minimum_halo_mass, mean_free_path)
 

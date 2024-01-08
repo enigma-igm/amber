@@ -34,13 +34,14 @@ class ReionModel:
         self.table_name = 'IC{:d}_zm{:.1f}_Dz{:.1f}_Az{:.1f}_Mm{:.1E}_mfp{:.1f}_hii{:d}_{:d}Mpc'. \
             format(self.ic_dimension, self.zmid, self.Deltaz, self.Az, self.Mmin, self.mfp,
                    self.hii_dimension, int(self.Lbox))
-        # initialize the reionization field as an ndarray of zeros
-        try:
-            data = np.fromfile('{0}/zreion_fields/{1}'.format(os.environ.get("DATADIR"), self.table_name),
-                               dtype=np.float32)
-        except:
-            print('\n', self.table_name, 'does not exist.\n')
+
         if self.method == 'amber':
+            try:
+                data = np.fromfile('{0}/zreion_fields/{1}'.format(os.environ.get("DATADIR"), self.table_name),
+                                   dtype=np.float32)
+            except:
+                print('\n', self.table_name, 'does not exist.\n')
+                raise ValueError("method=amber is specified, but there isn't any existing model field.")
             self.field = np.reshape(data, [self.hii_dimension, self.hii_dimension, self.hii_dimension], order='F')
         elif self.method == 'density':
             if not density_file: # if density_file is not named, then break
