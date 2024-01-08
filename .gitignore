@@ -11,6 +11,7 @@ amber/examples/output/grf/*
 amber/examples/output/lpt/*
 amber/examples/output/mesh/*
 amber/examples/output/reion/*
+amber/examples/output/*_log.txt
 amber/examples/amber.x
 amber/src/Makefile
 amber.egg-info/
