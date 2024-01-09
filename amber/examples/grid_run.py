@@ -3,9 +3,9 @@ import os
 import subprocess
 
 
-def read_amber_parameters(input_filename):
+def read_reionization_parameters(input_filename):
     """
-        Read a 6 column txt file containing the AMBER model parameters plus a temperature column at the end.
+        Read a 6 column txt file containing the AMBER+heat reionization model parameters.
         The temperature values are not used in AMBER, but are used later in the grid modeling process.
 
         Inputs:
@@ -25,10 +25,13 @@ def read_amber_parameters(input_filename):
                                            ionizing photons.
 
                 mean_free_path (array): Mean free path of ionizing photons to use.
+
+                heat_injected (array): Maximum amount of heat injected when cell is reionized.
     """
-    # last column should be temperature, which is not used in AMBER
-    midpoint, duration, asymmetry, minimum_halo_mass, mean_free_path, _ = np.loadtxt(input_filename, unpack=True)
-    return zip(midpoint, duration, asymmetry, minimum_halo_mass, mean_free_path)
+    midpoint, duration, asymmetry, minimum_halo_mass, mean_free_path, heat_injected = \
+        np.loadtxt(input_filename, unpack=True)
+    return zip(midpoint, duration, asymmetry, minimum_halo_mass, mean_free_path, heat_injected)
+
 
 
 if __name__ == '__main__':
