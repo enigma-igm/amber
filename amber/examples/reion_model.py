@@ -37,7 +37,7 @@ class ReionModel:
 
         if self.method == 'amber':
             try:
-                data = np.fromfile('{0}/zreion_fields/{1}'.format(os.environ.get("DATADIR"), self.table_name),
+                data = np.fromfile('{0}/zreion_fields/{1}'.format(os.environ["DATADIR"], self.table_name),
                                    dtype=np.float32)
             except:
                 print('\n', self.table_name, 'does not exist.\n')
@@ -161,6 +161,7 @@ def retrieve_flexknot_limits(_redshifts,
 
         Inputs:
             _redshifts (float list): List of redshifts to interpolate the FlexKnot limits at.
+            planck_file (string): Full path to the Planck 2018 x_e file, containing the free electron fraction values.
         Returns:
             xhi_lower_limit (float list): List of lower limits on volume-weighted neutral fraction, xHI, at each
                                           value in _redshifts.

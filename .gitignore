@@ -9,3 +9,5 @@
 /amber.egg-info/
 /build/
 /dist/
+/amber/examples/scratch/
+setup.py
