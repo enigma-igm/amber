@@ -3,7 +3,7 @@
 """
 import numpy as np
 import os
-from reion_model import ReionModel
+from amber.examples.reion_model import ReionModel
 from matplotlib import pyplot as plt
 import subprocess
 import sys
@@ -177,10 +177,7 @@ def setup_simulation_grid(parameter_file, simulation_directory_path, template_in
 
         values_dict['nyx.reionization_T_zHI'] = '{:.1E}'.format(heat_injected)
 
-        sim_dir_name = 'nyx_cdm_{:d}_v{:d}_{:s}Mpc_zreion_amber_IC{:d}_zm{:.1f}_Dz{:.1f}_Az{:.1f}_Mm{:.1E}_mfp{:.1f}_' \
-                       'hii{:.1f}_DT{:.1E}'.format(int(Ngrid), int(vbc), Lbox, int(ics_Ngrid),
-                                                   midpoint, duration, asymmetry, Mmin, mfp, int(hii_Ngrid),
-                                                   heat_injected)
+        sim_dir_name = f'nyx_cdm_{Ngrid}_v{vbc}_{Lbox}Mpc_zreion_amber_IC{ics_Ngrid}_zm{midpoint:.1f}_Dz{duration:.1f}_Az{asymmetry:.1f}_Mm{Mmin:.1E}_mfp{mfp:.1f}_hii{hii_Ngrid}_DT{heat_injected:.1E}'
         if os.path.exists('{:s}/{:s}'.format(simulation_directory_path, sim_dir_name)):
             print('Simulation directory exists already.')
         else:
