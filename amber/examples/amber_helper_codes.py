@@ -133,7 +133,7 @@ def plot_xHI_history(parameter_file, data_directory, figure_directory, volume_we
 
 
 def setup_simulation_grid(parameter_file, simulation_directory_path, template_input_file, Ngrid=256, ics_Ngrid=128,
-                          Lbox=20, vbc=30, hii_Ngrid=128):
+                          Lbox=20, vbc=30, hii_Ngrid=128, zoutputs=['5.1'], HubbleParam=0.675):
     """
         Make directories and copy/modify input files for AMBER+Nyx reionization models.
 
@@ -160,11 +160,11 @@ def setup_simulation_grid(parameter_file, simulation_directory_path, template_in
 
     """
     # TODO fix hardcoded h=0.675 value
-    values_dict = {'nyx.geometry.prob_hi': '{:.6f}'.format(float(Lbox) / 0.675), 'nyx.final_z': '5.1',
-                   'nyx.plot_z_values': '5.1', 'nyx.inhomo_grid': '{:d}'.format(int(hii_Ngrid)),
+    values_dict = {'nyx.geometry.prob_hi': '{:.6f}'.format(float(Lbox) / HubbleParam), 'nyx.final_z': zoutputs[0],
+                   'nyx.plot_z_values': ' '.join(zoutputs[1:]), 'nyx.inhomo_grid': '{:d}'.format(int(hii_Ngrid)),
                    'amr.n_cell': '{:d} {:d} {:d}'.format(int(Ngrid), int(Ngrid), int(Ngrid)),
-                   'nyx.reionization_T_zHI': ''}
-
+                   'nyx.reionization_T_zHI': '', 'nyx.sph_particle_file': f"/pscratch/sd/d/doughty/ICs/N{Ngrid}_L{Lbox}_V{vbc}_IC/ICs_0.out", 
+                   'nyx.binary_particle_file': f"/pscratch/sd/d/doughty/ICs/N{Ngrid}_L{Lbox}_V{vbc}_IC/ICs_1.out"}
     parameter_zip = read_reionization_parameters(input_filename=parameter_file)
     for parameters in parameter_zip:
         # verbose, but make it clear what each parameters[index] is supposed to be
@@ -182,8 +182,7 @@ def setup_simulation_grid(parameter_file, simulation_directory_path, template_in
             print('Simulation directory exists already.')
         else:
             print('Simulation directory does not exist. Making it now.')
-            os.makedirs('{:s}/{:s}'.format(simulation_directory_path, sim_dir_name))
-            
+            #os.makedirs('{:s}/{:s}'.format(simulation_directory_path, sim_dir_name))
         # assumes that running this code means you want to overwrite any existing inputs.txt file
         with open(template_input_file) as f:
             new_file = open('{:s}/{:s}/inputs.txt'.format(simulation_directory_path, sim_dir_name), 'w')
