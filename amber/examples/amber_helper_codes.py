@@ -159,7 +159,6 @@ def setup_simulation_grid(parameter_file, simulation_directory_path, template_in
                 Nothing is returned, but directories are made and input files are copied and modified.
 
     """
-    # TODO fix hardcoded h=0.675 value
     values_dict = {'nyx.geometry.prob_hi': '{:.6f}'.format(float(Lbox) / HubbleParam), 'nyx.final_z': zoutputs[0],
                    'nyx.plot_z_values': ' '.join(zoutputs[1:]), 'nyx.inhomo_grid': '{:d}'.format(int(hii_Ngrid)),
                    'amr.n_cell': '{:d} {:d} {:d}'.format(int(Ngrid), int(Ngrid), int(Ngrid)),
@@ -182,7 +181,7 @@ def setup_simulation_grid(parameter_file, simulation_directory_path, template_in
             print('Simulation directory exists already.')
         else:
             print('Simulation directory does not exist. Making it now.')
-            #os.makedirs('{:s}/{:s}'.format(simulation_directory_path, sim_dir_name))
+            os.makedirs('{:s}/{:s}'.format(simulation_directory_path, sim_dir_name))
         # assumes that running this code means you want to overwrite any existing inputs.txt file
         with open(template_input_file) as f:
             new_file = open('{:s}/{:s}/inputs.txt'.format(simulation_directory_path, sim_dir_name), 'w')

@@ -32,9 +32,10 @@ for model_filename in all_model_filenames:
     field_3d.flatten(order='C').astype(np.float32).tofile(f"{full_output_filepath}/zhi.bin")  # saving in C order for converter
     if not os.path.exists(f"{full_output_filepath}/zhi"):
         os.makedirs(f"{full_output_filepath}/zhi")
-    os.chdir(f"{full_output_filepath}")
-    subprocess.call(["/pscratch/sd/d/doughty/Nyx/Util/zhi_converter/main3d.gnu.x86-milan.TPROF.MPI.ex.128"])
-    os.rename(f"{full_output_filepath}/zhi/zhi_D_00000", f"{full_output_filepath}/zhi_D_00000")
-    os.rename(f"{full_output_filepath}/zhi/zhi_H", f"{full_output_filepath}/zhi_H")
-
-    sys.exit()
+    if not os.path.exists(f"{full_output_filepath}/zhi_D_00000"):
+        os.chdir(f"{full_output_filepath}")
+        subprocess.call(["/pscratch/sd/d/doughty/Nyx/Util/zhi_converter/main3d.gnu.x86-milan.TPROF.MPI.ex.128"])
+        os.rename(f"{full_output_filepath}/zhi/zhi_D_00000", f"{full_output_filepath}/zhi_D_00000")
+        os.rename(f"{full_output_filepath}/zhi/zhi_H", f"{full_output_filepath}/zhi_H")
+    print('\ntest counter', counter, '\n')
+    #sys.exit()
