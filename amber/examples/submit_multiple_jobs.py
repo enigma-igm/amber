@@ -6,11 +6,11 @@ import shutil
 
 sim_dirs = glob('/pscratch/sd/d/doughty/emuinf/grid/nyx*')
 
-target_successes = 2
+target_successes = 7
 success_counter = 0
 
 for directory in sim_dirs:
-
+    print('Calls', success_counter)
     if success_counter >= target_successes:
         print(f"\nInitiated {target_successes} runs.\n")
         sys.exit()

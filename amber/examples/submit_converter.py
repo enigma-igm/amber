@@ -30,16 +30,17 @@ def run_hdf5_converter(grid_directory_path, target_successes, template_input_fil
         model_name = directory.split('/')[-1]
         hdf5list = glob(f"{directory}/*.hdf5")
         if len(hdf5list) > 0:  # there are hdf5 files, so continue
-            print('\nfound hdf5files in', model_name, 'so continuing\n')
+            print(f'\nFound hdf5files in {model_name}, so continuing to avoid overwrite.\n')
             continue
         else:
             pltfiles = glob(f"{directory}/plt*")
-            print('\nfound', len(pltfiles), 'pltfiles in dir', directory)
-            if len(pltfiles) > 0: success_counter += 1
+            print(f'\nFound {len(pltfiles)} pltfiles in dir {directory}.')
+            if not len(pltfiles) > 0:
+                continue
+            print('Running on model', model_name)
             for entry in pltfiles:
+                success_counter += 1
                 pltfilename = entry.split('/')[-1]
-                print('running on model', model_name)
-                print('on pltfile', entry)
                 redshift, snapnumber = find_redshift_of_pltfile(directory, pltfilename)
                 shutil.copy(template_input_file, f"{directory}/run_converter_{snapnumber}.saul")  # overwrites any existing "_{snapnumber}.saul file
                 with open(f"{directory}/run_converter_{snapnumber}.saul", 'a') as f:
@@ -49,6 +50,8 @@ def run_hdf5_converter(grid_directory_path, target_successes, template_input_fil
 
                     f.write('date "+%Y-%m-%d_%H:%M:%S"\n')
                     f.close()
+                os.chdir(f"{directory}")
+                subprocess.Popen(['sbatch', f'run_converter_{snapnumber}.saul'])
 
-run_hdf5_converter('/pscratch/sd/d/doughty/emuinf/grid', target_successes=3, template_input_file='/pscratch/sd/d/doughty/emuinf/templates/run_converter_template.saul')
-#find_redshift_of_pltfile('/pscratch/sd/d/doughty/emuinf/grid/nyx_cdm_128_v30_20Mpc_zreion_amber_IC128_zm10.0_Dz2.7_Az7.9_Mm1.0E+09_mfp3.0_hii128_DT2.6E+04', 'plt00356')
+# make the .saul files for converter, and call sbatch on the script
+run_hdf5_converter('/pscratch/sd/d/doughty/emuinf/grid', target_successes=1, template_input_file='/pscratch/sd/d/doughty/emuinf/templates/run_converter_template.saul')
