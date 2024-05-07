@@ -8,6 +8,17 @@ import shutil
 
 
 def find_redshift_of_pltfile(runlog_dirpath, pltfile):
+    """
+        Find the redshift of the given Nyx snapshot pltfile as recorded in the runlog file.
+
+        Inputs:
+                runlog_dirpath (str): Path to the directory containing the Nyx runlog file (itself always called 'runlog').
+                pltfile (str): The pltfile (Nyx snapshot) name to search for in the runlog file, e.g. 'plt00380'.
+
+        Returns:
+                redshift: The redshift of the given pltfile.
+                search_string: The search string used to find the redshift in the runlog file, i.e. the snapshot number.
+    """
     pltnumber, redshift = np.loadtxt(f"{runlog_dirpath}/runlog", usecols=(0,3), unpack=True, dtype=str)
     search_string = str(pltfile[3:].lstrip('0'))
     index = list(pltnumber).index(search_string)
@@ -87,7 +98,20 @@ def convert_reion_field(reion_fields_dir, reion_fields_prefix, sim_dir, sim_pref
             counter += 1
 
 
-def submit_sim_job(sim_dir, sim_prefix, cap=10):
+def submit_sim_job(sim_dir, sim_prefix, template_input_file, cap=10):
+    """
+        Submit Nyx jobs to the queue for N directories (up to cap) that have the reionization field converted to the
+        correct format.
+
+        Inputs:
+                sim_dir: The containing directory for all the simulation runs.
+                sim_prefix: The prefix for the simulation runs (e.g. 'nyx' here).
+                template_input_file: A template input file for the Nyx runs, usually called run_nyx.saul.
+                cap: The maximum number of sbatch jobs to submit.
+
+        Returns:
+                None
+    """
 
     sim_dirs = glob(f'{sim_dir}/{sim_prefix}*')
 
@@ -106,8 +130,8 @@ def submit_sim_job(sim_dir, sim_prefix, cap=10):
         # second check if there are already plt files
         if len(pltlist) > 0:
             continue
-        else:
-            shutil.copyfile('/pscratch/sd/d/doughty/emuinf/templates/run_nyx.saul', f"{directory}/run_nyx.saul")
+        else: # template input file: /pscratch/sd/d/doughty/emuinf/templates/run_nyx.saul
+            shutil.copyfile(template_input_file, f"{directory}/run_nyx.saul")
             os.chdir(f"{directory}")
             subprocess.Popen(['sbatch', 'run_nyx.saul'])
             print(f"\nRunning the job in directory {directory}.\n")
@@ -159,7 +183,8 @@ def submit_convert_job(sim_dir, sim_prefix, template_input_file, exe_path, cap=1
 convert_reion_field('/pscratch/sd/d/doughty/emuinf/reionization_fields', 'IC',
                     '/pscratch/sd/d/doughty/emuinf/grid', 'nyx_cdm_128_v30_20Mpc_zreion_amber_')
 
-submit_sim_job('/pscratch/sd/d/doughty/emuinf/grid', 'nyx')
+submit_sim_job('/pscratch/sd/d/doughty/emuinf/grid', 'nyx',
+               '/pscratch/sd/d/doughty/emuinf/templates/run_nyx.saul')
 
 submit_convert_job('/pscratch/sd/d/doughty/emuinf/grid', 'nyx',
                    template_input_file='/pscratch/sd/d/doughty/emuinf/templates/run_converter_template.saul',
