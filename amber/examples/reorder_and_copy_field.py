@@ -6,11 +6,11 @@ import os
 import subprocess
 
 
-num_for_test = 10
+num_for_test = 3
 
 all_model_filenames = glob('/pscratch/sd/d/doughty/emuinf/reionization_fields/IC*')  # the fields (no mention of DT)
 
-prefix = 'nyx_cdm_128_v30_20Mpc_zreion_amber_'
+prefix = 'nyx_cdm_256_v30_20Mpc_zreion_amber_'
 counter = 0
 for model_filename in all_model_filenames:
 
