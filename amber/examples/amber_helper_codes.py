@@ -181,6 +181,7 @@ def setup_simulation_grid(parameter_file, simulation_directory_path, template_in
             print('Simulation directory exists already.')
         else:
             print('Simulation directory does not exist. Making it now.')
+            print('{:s}/{:s}'.format(simulation_directory_path, sim_dir_name))
             os.makedirs('{:s}/{:s}'.format(simulation_directory_path, sim_dir_name))
         # assumes that running this code means you want to overwrite any existing inputs.txt file
         with open(template_input_file) as f:
